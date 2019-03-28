@@ -33,12 +33,15 @@ namespace AttributeTests
            
           
 
-            var customAttributeCountOnInstance = instance.GetType().GetCustomAttributes().Count();
+            var customAttributeOnInstance = instance.GetType().GetCustomAttributes().SingleOrDefault().ToString();
 
-            var customAttributeCountOnDynamicType = newType.GetCustomAttributes(typeof(MyCustomAttribute), false);
+            var customAttributeOnDynamicType = newType.GetCustomAttributes(typeof(MyCustomAttribute), false).SingleOrDefault().ToString();
+
+
+            Console.WriteLine($"Attribute on instance: {customAttributeOnInstance}");
+            Console.WriteLine($"Attribute on Dynamic Type (MyClassProxy): {customAttributeOnDynamicType}");
 
             bool hasCustomAttribute = Attribute.IsDefined(newType, typeof(MyCustomAttribute));
-
             Console.WriteLine(hasCustomAttribute);
 
             
