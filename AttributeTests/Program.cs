@@ -10,9 +10,7 @@ namespace AttributeTests
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-
-
+            
             var type = typeof(MyClass);
 
             var aName = new System.Reflection.AssemblyName("SomeNamespace");
@@ -26,21 +24,22 @@ namespace AttributeTests
             var attrBuilder = new CustomAttributeBuilder(attrCtorInfo, new object[] { });
             tb.SetCustomAttribute(attrBuilder);
 
+            //Dynamic Type -- MyClassProxy
             var newType = tb.CreateType();
+
+            //Instance of Dynamic Type -- MyClassProxy
             var instance = Activator.CreateInstance(newType);
 
-
-
-            Console.WriteLine(newType.GetType().Namespace);
+           
           
 
-            var res0 = instance.GetType().GetCustomAttributes().Count();
+            var customAttributeCountOnInstance = instance.GetType().GetCustomAttributes().Count();
 
-            var res = newType.GetCustomAttributes(typeof(MyCustomAttribute), false);
+            var customAttributeCountOnDynamicType = newType.GetCustomAttributes(typeof(MyCustomAttribute), false);
 
-            bool b = Attribute.IsDefined(newType, typeof(MyCustomAttribute));
+            bool hasCustomAttribute = Attribute.IsDefined(newType, typeof(MyCustomAttribute));
 
-            Console.WriteLine(b);
+            Console.WriteLine(hasCustomAttribute);
 
             
         }
